@@ -85,7 +85,7 @@ def get_combo_from_line(line: str) -> Combo | None:
 def get_reachable_results(combos: list[Combo], found_elements: list[str]) -> list[str]:
     results = []
     for combo in combos:
-        if combo.e1 in found_elements and combo.e2 in found_elements and combo.result not in found_elements:
+        if combo.e1 in found_elements and combo.e2 in found_elements and combo.result not in found_elements and combo.result is not None:
             results.append(combo.result)
     return results
 
@@ -206,6 +206,12 @@ def get_elements_usage(combos: list[Combo]) -> dict[str,int]:
             usage[combo.e1] -= 1
 
     return usage
+
+def get_combo_result(combos: list[Combo], e1: str, e2: str) -> (str | None):
+    for combo in combos:
+        if (combo.e1 == e1 and combo.e2 == e2) or (combo.e2 == e1 and combo.e1 == e2):
+            return combo.result
+    return None 
 
 if __name__ == "__main__":
     combinations_file = "combo.txt"

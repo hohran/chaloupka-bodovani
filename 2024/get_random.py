@@ -10,13 +10,17 @@ def get_found_elements(filepath) -> list[str]:
 
     return elements
 
+def get_random(founds_path: str, combos=None) -> None:
+    combofile = 'combo.txt'
+    # founds_parent_folder = 'games'
+    # found_elements_file = f'{founds_parent_folder}/{founds_path}'
 
-combofile = 'combo.txt'
-found_elements_file = 'hra-vojta1.txt'
 
-combos = generate.get_combos_from_file(combofile)
-combos = generate.remove_empty_combos(combos)
-found_elements = get_found_elements(found_elements_file)
+    if combos is None:
+        combos = generate.get_combos_from_file(combofile)
+        combos = generate.remove_empty_combos(combos)
+    found_elements = get_found_elements(founds_path)
 
-reachable_results = generate.get_reachable_results(combos, found_elements)
-print(random.choice(reachable_results))
+
+    reachable_results = generate.get_reachable_results(combos, found_elements)
+    print(random.choice(reachable_results))
