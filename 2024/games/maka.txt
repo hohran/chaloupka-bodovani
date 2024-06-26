@@ -12,3 +12,5 @@ more
 ryba
 les
 tornado
+para
+gejzir

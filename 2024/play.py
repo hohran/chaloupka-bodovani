@@ -1,5 +1,5 @@
 import generate as gen
-from get_random import get_random
+from get_random import get_random, get_found_elements
 
 class EndOfGameException(Exception):
     pass
@@ -42,6 +42,11 @@ def main():
     founds_file = f'{game_folder}/{skupinka}'
     combofile = 'combo.txt'
     combos = gen.get_combos_from_file(combo_file=combofile)
+
+    already_found_file = 'found.txt'
+    found_today_file = 'found-today.txt'
+
+    already_found = get_found_elements(already_found_file)
     
     def combine() -> None:
         combination = input("Elementy ke kombinaci: ")
@@ -54,6 +59,7 @@ def main():
         e2 = combination_elements[1]
         result = gen.get_combo_result(combos, e1, e2)
         if result is None:
+            print('Nejde\n')
             return
         element_usage = gen.get_elements_usage(combos)
         if result in element_usage:
@@ -61,7 +67,12 @@ def main():
         else:
             print(f'{result} - (0 vyuziti)')
 
+        if result not in already_found:
+            print('\n!!!BINGO!!!')
+        print("")
+
         add_to_founds(founds_file, result)
+        add_to_founds(found_today_file, result)
 
     def hint() -> None:
         get_random(founds_file, combos)
